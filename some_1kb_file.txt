@@ -1,0 +1,36 @@
+use std::io::Read;
+use std::fs::File;
+
+// with a smaller buffer, there's basically no difference between the methods...
+// const BUFFER_SIZE: usize = 2 * 1024;
+
+// ...but the larger the Vec, the bigger the discrepancy.
+// for simplicity's sake, let's assume this is a hard upper limit.
+const BUFFER_SIZE: usize = 300 * 1024 * 1024;
+
+
+fn naive() {
+    let mut buffer = Vec::with_capacity(BUFFER_SIZE);
+
+    for _ in 0..100 {
+        let mut file = File::open("some_1kb_file.txt").expect("opening file");
+
+        let metadata = file.metadata().expect("reading metadata");
+        let len = metadata.len();
+        assert!(len <= BUFFER_SIZE as u64);
+
+        buffer.clear();
+        file.read_to_end(&mut buffer).expect("reading file");
+
+        // do "stuff" with buffer
+        let check = buffer.iter().fold(0usize, |acc, x| acc.wrapping_add(*x as usize));
+
+        println!("length: {len}, check: {check}");
+    }
+}
+
+fn take() {
+    let mut buffer = Vec::with_capacity(BUFFER_SIZE);
+
+    for _ in 0..100 {
+aaaaaaaaaaaaaaa
