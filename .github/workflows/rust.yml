@@ -31,6 +31,7 @@ jobs:
     - name: Build
       run: cargo build --release
     - name: Perf
+      shell: bash
       run: |
         time target/release/read-file-buffer naive 1024 | grep -v length
         time target/release/read-file-buffer whole_slice 1024 | grep -v length
