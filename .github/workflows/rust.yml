@@ -1,0 +1,40 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --release
+    - name: Perf
+      run: |
+        time target/release/read-file-buffer naive 1024
+        time target/release/read-file-buffer whole_slice 1024
+        time target/release/read-file-buffer exact_slice 1024
+        time target/release/read-file-buffer naive 1024000000
+        time target/release/read-file-buffer whole_slice 1024000000
+        time target/release/read-file-buffer exact_slice 1024000000
+  build-windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build
+      run: cargo build --release
+    - name: Perf
+      run: |
+        time target/release/read-file-buffer naive 1024
+        time target/release/read-file-buffer whole_slice 1024
+        time target/release/read-file-buffer exact_slice 1024
+        time target/release/read-file-buffer naive 1024000000
+        time target/release/read-file-buffer whole_slice 1024000000
+        time target/release/read-file-buffer exact_slice 1024000000
