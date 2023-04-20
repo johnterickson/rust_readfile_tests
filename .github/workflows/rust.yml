@@ -18,9 +18,9 @@ jobs:
       run: cargo build --release
     - name: Perf
       run: |
-        time target/release/read-file-buffer naive 1024 | grep -v length
-        time target/release/read-file-buffer whole_slice 1024 | grep -v length
-        time target/release/read-file-buffer exact_slice 1024 | grep -v length
+        time target/release/read-file-buffer naive 2048 | grep -v length
+        time target/release/read-file-buffer whole_slice 2048 | grep -v length
+        time target/release/read-file-buffer exact_slice 2048 | grep -v length
         time target/release/read-file-buffer naive 1024000000 | grep -v length
         time target/release/read-file-buffer whole_slice 1024000000 | grep -v length
         time target/release/read-file-buffer exact_slice 1024000000 | grep -v length
@@ -33,9 +33,9 @@ jobs:
     - name: Perf
       shell: bash
       run: |
-        time target/release/read-file-buffer naive 1024 | grep -v length
-        time target/release/read-file-buffer whole_slice 1024 | grep -v length
-        time target/release/read-file-buffer exact_slice 1024 | grep -v length
+        time target/release/read-file-buffer naive 2048 | grep -v length
+        time target/release/read-file-buffer whole_slice 2048 | grep -v length
+        time target/release/read-file-buffer exact_slice 2048 | grep -v length
         time target/release/read-file-buffer naive 1024000000 | grep -v length
         time target/release/read-file-buffer whole_slice 1024000000 | grep -v length
         time target/release/read-file-buffer exact_slice 1024000000 | grep -v length
